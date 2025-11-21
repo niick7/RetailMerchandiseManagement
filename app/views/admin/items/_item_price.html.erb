@@ -1,0 +1,46 @@
+<div class="border rounded-lg p-5 bg-white space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-semibold">Item Prices</h2>
+      <%= link_to "Add Price", new_admin_item_item_price_path(@item),
+            class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700" %>
+    </div>
+
+    <% @item.item_prices.order(primary: :desc).each do |p| %>
+      <% is_primary = p.primary %>
+      <div class="border rounded p-3 space-y-2 bg-gray-50 <%= 'border-green-500 ring-1 ring-green-300 bg-green-50' if is_primary %>">
+        <div class="flex justify-between">
+          <span class="text-sm text-gray-500">Price</span>
+          <span class="font-mono font-semibold"><%= number_to_currency(p.price) %></span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span>Primary</span>
+          <span>
+            <% if is_primary %>
+              <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">Yes</span>
+            <% else %>
+              <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">No</span>
+            <% end %>
+          </span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span>Effective Date</span>
+          <span><%= p.effective_date&.strftime("%Y-%m-%d") %></span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span>End Date</span>
+          <span><%= p.end_date&.strftime("%Y-%m-%d") %></span>
+        </div>
+        <div class="flex justify-end space-x-2 pt-2">
+          <%= link_to "Edit", edit_admin_item_item_price_path(@item, p),
+                class: "text-blue-600 hover:underline text-sm" %>
+          <%= link_to "Delete", admin_item_item_price_path(@item, p),
+                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                class: "text-red-600 hover:underline text-sm" %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @item.item_prices.empty? %>
+      <p class="text-gray-500 text-sm">No prices found.</p>
+    <% end %>
+  </div>

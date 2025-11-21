@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Retail Merchandise Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- TailwindCSS -->
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+
+    <!-- Background shapes -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-20 -left-20 w-96 h-96 bg-indigo-200 rounded-full filter blur-3xl opacity-40"></div>
+      <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-purple-200 rounded-full filter blur-3xl opacity-40"></div>
+    </div>
+
+    <!-- Main auth container -->
+    <div class="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+      <div class="flex justify-center mb-6">
+        <%= image_tag "logo.png", class: "h-50 w-auto" rescue "" %>
+      </div>
+
+      <% if notice %>
+        <div data-controller="flash"
+            data-flash-timeout-value="5000"
+            class="flex items-center justify-between bg-green-100 text-green-800 px-4 py-2 rounded mb-4 shadow">
+          <span><%= notice %></span>
+          <button type="button"
+                  data-action="click->flash#close"
+                  class="text-green-800 font-bold text-xl leading-none px-2">×</button>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div data-controller="flash"
+            data-flash-timeout-value="5000"
+            class="flex items-center justify-between bg-red-100 text-red-800 px-4 py-2 rounded mb-4 shadow">
+          <span><%= alert %></span>
+          <button type="button"
+                  data-action="click->flash#close"
+                  class="text-red-800 font-bold text-xl leading-none px-2">×</button>
+        </div>
+      <% end %>
+
+      <%= yield %>
+
+      <p class="mt-6 text-xs text-center text-gray-500">
+        © <%= Time.zone.now.year %> Retail Merchandise Management. All rights reserved.
+      </p>
+    </div>
+  </body>
+</html>

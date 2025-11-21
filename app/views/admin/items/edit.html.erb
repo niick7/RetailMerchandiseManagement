@@ -1,0 +1,17 @@
+<div class="max-w-sm">
+  <h1 class="text-xl font-bold mb-4">Edit Item</h1>
+  <%= form_with(model: [:admin, @item], class: "space-y-3", method: :patch) do |f| %>
+    <div>
+      <label class="block font-medium mb-1">SKU</label>
+      <%= f.text_field :sku, class: "w-full px-2 py-1.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "SKU" %>
+    </div>
+    <div class="flex items-center space-x-2">
+      <%= f.check_box :active, class: "h-4 w-4" %>
+      <label class="text-sm font-medium" for="item_active">Active</label>
+    </div>
+    <div class="flex justify-between pt-2">
+      <%= link_to "← Back", :back, class: "px-3 py-1.5 text-sm text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300 transition" %>
+      <%= f.submit "Update", class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" %>
+    </div>
+  <% end %>
+</div>

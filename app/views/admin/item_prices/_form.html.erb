@@ -1,0 +1,39 @@
+<%= form_with(model: [:admin, @item, @item_price], class: "space-y-4") do |f| %>
+  <% if @item_price.errors.any? %>
+    <div class="p-4 rounded border border-red-300 bg-red-50 text-red-700">
+      <p><strong><%= pluralize(@item_price.errors.count, "error") %> prevented this price from being saved:</strong></p>
+      <ul class="list-disc list-inside mt-2">
+        <% @item_price.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :price, class: "block text-sm font-medium" %>
+    <%= f.number_field :price, step: 0.01, class: "mt-1 block w-full border rounded px-3 py-2" %>
+  </div>
+
+  <div>
+    <%= f.label :effective_date, class: "block text-sm font-medium" %>
+    <%= f.date_field :effective_date, class: "mt-1 block w-full border rounded px-3 py-2", data: { controller: "datepicker", action: "click->datepicker#open" } %>
+  </div>
+
+  <div>
+    <%= f.label :end_date, class: "block text-sm font-medium" %>
+    <%= f.date_field :end_date, class: "mt-1 block w-full border rounded px-3 py-2", data: { controller: "datepicker", action: "click->datepicker#open" } %>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <%= f.check_box :primary, class: "h-4 w-4" %>
+    <%= f.label :primary, "Primary", class: "text-sm" %>
+  </div>
+
+  <div class="flex space-x-3">
+    <%= f.submit class: "px-4 py-2 rounded bg-blue-600 text-white text-sm font-semibold" %>
+
+    <%= link_to "Back", [:admin, @item],
+               class: "px-4 py-2 rounded border text-sm" %>
+  </div>
+<% end %>

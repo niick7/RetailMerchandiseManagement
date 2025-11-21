@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  api_token: MyString
+  api_token_expired_at: 2025-10-28 18:17:11
+  api_quota: 1
+
+two:
+  user: two
+  api_token: MyString
+  api_token_expired_at: 2025-10-28 18:17:11
+  api_quota: 1

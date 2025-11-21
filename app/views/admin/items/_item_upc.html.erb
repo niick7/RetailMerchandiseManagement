@@ -1,0 +1,47 @@
+<div class="border rounded-lg p-5 bg-white space-y-4">
+  <div class="flex items-center justify-between">
+    <h2 class="text-lg font-semibold">Item UPCs</h2>
+    <%= link_to "Add UPC",
+          new_admin_item_item_upc_path(@item),
+          class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700" %>
+  </div>
+  <% @item.item_upcs.order(primary: :desc).each do |u| %>
+    <% is_primary = u.primary %>
+    <div class="border rounded p-3 space-y-2 bg-gray-50 <%= 'border-green-500 ring-1 ring-green-300 bg-green-50' if is_primary %>">
+      <div class="flex justify-between">
+        <span class="text-sm text-gray-500">UPC</span>
+        <span class="font-mono font-semibold"><%= u.upc_code %></span>
+      </div>
+      <div class="flex justify-between text-sm">
+        <span>Primary</span>
+        <span>
+          <% if is_primary %>
+            <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">Yes</span>
+          <% else %>
+            <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">No</span>
+          <% end %>
+        </span>
+      </div>
+      <div class="flex justify-between text-sm">
+          <span>Created Date</span>
+          <span><%= to_time(u.created_at) %></span>
+        </div>
+      <div class="flex justify-between text-sm">
+        <span>Updated Date</span>
+        <span><%=to_time(u.updated_at) %></span>
+      </div>
+      <div class="flex justify-end space-x-2 pt-2">
+        <%= link_to "Edit",
+              edit_admin_item_item_upc_path(@item, u),
+              class: "text-blue-600 hover:underline text-sm" %>
+        <%= link_to "Delete",
+              admin_item_item_upc_path(@item, u),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+              class: "text-red-600 hover:underline text-sm" %>
+      </div>
+    </div>
+  <% end %>
+  <% if @item.item_upcs.empty? %>
+    <p class="text-gray-500 text-sm">No UPCs found.</p>
+  <% end %>
+</div>

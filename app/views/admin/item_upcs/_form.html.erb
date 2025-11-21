@@ -1,0 +1,26 @@
+<%= form_with(model: [:admin, @item, @item_upc], class: "space-y-4") do |f| %>
+  <% if @item_upc.errors.any? %>
+    <div class="p-3 bg-red-100 text-red-700 rounded border border-red-300">
+      <% @item_upc.errors.full_messages.each do |msg| %>
+        <div>- <%= msg %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- UPC Code -->
+  <div>
+    <%= f.label :upc_code, "UPC Code", class: "block text-sm font-medium" %>
+    <%= f.text_field :upc_code, class: "mt-1 w-full border rounded px-3 py-2" %>
+  </div>
+
+  <!-- Primary -->
+  <div class="flex items-center space-x-2">
+    <%= f.check_box :primary, class: "h-4 w-4" %>
+    <%= f.label :primary, "Primary UPC" %>
+  </div>
+
+  <div class="flex space-x-3">
+    <%= f.submit class: "px-4 py-2 bg-blue-600 text-white rounded" %>
+    <%= link_to "Back", admin_item_path(@item), class: "px-4 py-2 border rounded" %>
+  </div>
+<% end %>

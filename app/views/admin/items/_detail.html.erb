@@ -1,0 +1,24 @@
+<section class="border rounded-lg p-5 bg-white space-y-3">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold">Item Detail</h1>
+    <div class="space-x-2">
+      <%= link_to "Edit",
+            edit_admin_item_path(@item),
+            class: "px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700" %>
+      <%= link_to "Back to list", admin_items_path,
+            class: "px-3 py-1.5 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300" %>
+    </div>
+  </div>
+  <div class="flex items-center space-x-2">
+    <p class="text-sm text-gray-500">Status:</p>
+    <% if @item.active? %>
+      <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">Active</span>
+    <% else %>
+      <span class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs">Inactive</span>
+    <% end %>
+  </div>
+  <div class="flex items-center space-x-2">
+      <p class="text-sm text-gray-500">SKU</p>
+      <span class="font-mono font-semibold"><%= @item.sku %></span>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+<%= form_with model: [:admin, @user],
+              url: form_url,
+              method: form_method,
+              class: "space-y-4" do |f| %>
+
+  <% if @user.errors.any? || (@user.api_user && @user.api_user.errors.any?) %>
+    <div class="p-3 bg-red-100 text-red-700 rounded border border-red-300 text-sm">
+      <% @user.errors.full_messages.each do |msg| %>
+        <div>- <%= msg %></div>
+      <% end %>
+      <% if @user.api_user %>
+        <% @user.api_user.errors.full_messages.each do |msg| %>
+          <div>- <%= msg %></div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- USER FIELDS -->
+  <div>
+    <%= f.label :email, class: "block mb-1 font-semibold" %>
+    <%= f.email_field :email, class: "border px-3 py-2 rounded w-full" %>
+  </div>
+
+  <div>
+    <%= f.label :password, class: "block mb-1 font-semibold" %>
+    <%= f.password_field :password, class: "border px-3 py-2 rounded w-full" %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation, class: "block mb-1 font-semibold" %>
+    <%= f.password_field :password_confirmation, class: "border px-3 py-2 rounded w-full" %>
+  </div>
+
+  <%= f.hidden_field :is_admin, value: false %>
+
+  <div class="flex items-center gap-2">
+    <%= f.check_box :active %>
+    <%= f.label :active, "Active", class: "font-semibold" %>
+  </div>
+
+  <hr class="my-4">
+
+  <!-- API USER FIELDS -->
+  <h3 class="text-lg font-semibold mb-2">API Settings</h3>
+
+  <%= f.fields_for :api_user do |af| %>
+    <div>
+      <%= af.label :api_quota, "API Quota", class: "block mb-1 font-semibold" %>
+      <%= af.number_field :api_quota,
+            class: "border px-3 py-2 rounded w-full",
+            min: 0 %>
+    </div>
+  <% end %>
+
+  <div class="flex gap-3 mt-4">
+    <%= f.submit "Save",
+          class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded" %>
+
+    <%= link_to "Back", admin_api_users_path,
+          class: "text-gray-600 hover:text-gray-900" %>
+  </div>
+<% end %>

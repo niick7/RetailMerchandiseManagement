@@ -1,0 +1,89 @@
+<%== @pagy.series_nav %>
+<div class="flex flex-col">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                ID
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Type
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                File Name
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Status
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Success / Error
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Error Messages
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Started
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Finished
+                            </td>
+                            <td scope="col" class="font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Actions
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                        <% @batches.each do |batch| %>
+                        <tr>
+                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                <%= batch.id %>
+                            </td>
+                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                <%= batch.import_type.to_s.humanize %>
+                            </td>
+                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                <%= batch.original_filename %>
+                            </td>
+                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                <div class="inline px-3 py-1 text-sm font-medium rounded-full gap-x-2
+                                  <%= case batch.status
+                                    when "queued"   then "bg-gray-100/60 text-gray-600"
+                                    when "running"  then "bg-blue-100/60 text-blue-600"
+                                    when "finished" then "bg-emerald-100/60 text-emerald-500"
+                                    when "failed"   then "bg-red-100/60 text-red-600"
+                                    else "bg-gray-100/60 text-gray-500"
+                                    end %>">
+                                  <%= batch.status.to_s.upcase %>
+                                </div>
+                            </td>
+                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                <%= batch.success_count %> / <%= batch.error_count %>
+                            </td>
+                            <td>
+                                <%= batch.error_messages %>
+                            </td>
+                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                <%= batch.started_at && to_time(batch.started_at) %>
+                            </td>
+                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                <%= batch.finished_at && to_time(batch.finished_at) %>
+                            </td>
+                            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                <% if batch.failed_file_path.present? %>
+                                  <%= link_to 'Download Failed',
+                                      download_failed_admin_import_batch_path(batch),
+                                      class: 'py-2 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-transparent bg-red-100 text-red-800 hover:bg-red-200 focus:outline-hidden focus:bg-red-200 disabled:opacity-50 disabled:pointer-events-none dark:text-red-400 dark:bg-red-800/30 dark:hover:bg-red-800/20 dark:focus:bg-red-800/20' %>
+                                <% end %>
+                            </td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<%== @pagy.series_nav %>

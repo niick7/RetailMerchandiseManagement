@@ -1,0 +1,81 @@
+
+<h2 class="text-lg font-medium text-gray-800 dark:text-white">API Users</h2>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-300">These users can call our system APIs for item price check up.</p>
+
+<div class="flex gap-6">
+    <div class="flex gap-2 mt-5 mb-5">
+        <%= render partial: 'shared/search', locals: { path: admin_api_users_path, placeholder: 'Search by Email' } %>
+    </div>
+    <div class="flex justify-end mt-5 mb-5">
+        <%= link_to "Create API User",
+            new_admin_api_user_path,
+            class: "px-4 py-2 bg-blue-600 text-white rounded" %>
+    </div>
+</div>
+
+<%== @pagy.series_nav %>
+<div class="flex flex-col mt-6">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                            <td scope="col" class="text-left font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                ID
+                            </th>
+                            <td scope="col" class="text-left font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Email
+                            </th>
+                            <td scope="col" class="text-left font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Active
+                            </th>
+                            <td scope="col" class="text-left font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Last Sign In At
+                            </th>
+                            <td scope="col" class="text-left font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                API Quota
+                            </th>
+                            <td scope="col" class="text-left font-bold px-4 py-4 text-sm font-weight text-gray-500 dark:text-gray-400">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                        <% @users.each do |user| %>
+                            <% api_user = user.api_user %>
+                            <% if api_user %>
+                                <tr>
+                                    <td class="text-left px-4 py-4 text-sm whitespace-nowrap">
+                                        <%= user.id %>
+                                    </td>
+                                    <td class="text-left px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <%= highlight_text(user.email, @keyword) %>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <div class="inline px-3 py-1 text-sm font-weight rounded-full gap-x-2 <%= user.active ? 'bg-emerald-100/60 text-emerald-500' : 'bg-blue-100/60 text-gray-500' %>">
+                                            <%= user.active.to_s.upcase %>
+                                        </div>
+                                    </td>
+                                    <td class="text-left px-4 py-4 text-sm whitespace-nowrap">
+                                        <%= user.last_sign_in_at %>
+                                    </td>
+                                    <td class="text-left px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <%= api_user.api_quota %>
+                                    </td>
+                                    <td class="text-left px-4 py-4 text-sm whitespace-nowrap">
+                                        <%= link_to 'Details', admin_api_user_path(user), 
+                                            class: 'py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-teal-100 text-teal-800 hover:bg-teal-200 focus:outline-hidden focus:bg-teal-200 disabled:opacity-50 disabled:pointer-events-none dark:text-teal-500 dark:bg-teal-800/30 dark:hover:bg-teal-800/20 dark:focus:bg-teal-800/20' %>
+                                        <%= link_to "Edit", edit_admin_api_user_path(user), 
+                                            class: 'py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-500 text-gray-500 hover:border-gray-800 hover:text-gray-800 focus:outline-hidden focus:border-gray-800 focus:text-gray-800 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:border-neutral-300' %>
+                                    </td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<%== @pagy.series_nav %>

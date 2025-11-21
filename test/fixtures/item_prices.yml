@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  itm: one
+  price: 9.99
+  effective_date: 2025-10-29 16:43:47
+  end_date: 2025-10-29 16:43:47
+  priority: 1
+
+two:
+  itm: two
+  price: 9.99
+  effective_date: 2025-10-29 16:43:47
+  end_date: 2025-10-29 16:43:47
+  priority: 1

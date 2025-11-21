@@ -1,0 +1,47 @@
+<div>
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold text-gray-800">
+        Import Items
+      </h1>
+      <p class="mt-1 text-sm text-gray-500">
+        Upload a CSV file to create or update items in bulk.
+      </p>
+    </div>
+    <div>
+      <%= link_to "Download Template",
+                  "/export/templates/import_items.csv",
+                  download: "import_items.csv",
+                  class: "inline-flex items-center px-3 py-2 text-sm font-medium
+                          border border-gray-300 rounded-md shadow-sm
+                          hover:bg-gray-50" %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-sm rounded-lg border border-gray-200 p-6">
+    <%= form_with url: admin_import_items_path,
+                  method: :post,
+                  multipart: true,
+                  local: true,
+                  class: "space-y-4" do |f| %>
+      <div>
+        <%= f.file_field :file,
+                         accept: ".csv",
+                         class: "block w-full text-sm text-gray-900
+                                 file:mr-4 file:py-2 file:px-4
+                                 file:rounded-md file:border-0
+                                 file:text-sm file:font-semibold
+                                 file:bg-gray-100 file:text-gray-700
+                                 hover:file:bg-gray-200" %>
+      </div>
+      <div class="flex items-center space-x-3">
+        <%= f.submit "Import Items",
+                     class: "inline-flex items-center px-4 py-2 text-sm font-medium
+                             rounded-md shadow-sm
+                             bg-indigo-600 text-white hover:bg-indigo-700" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render partial: 'admin/import_batches/batches' %>
