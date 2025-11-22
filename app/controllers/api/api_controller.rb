@@ -28,10 +28,7 @@ class Api::ApiController < ActionController::API
         return render_unauthorized(I18n.t("devise.failure.inactive_account"))
       end
 
-      puts "@current_user.api_user.api_quota: #{@current_user.api_user.api_quota}"
-
       if @current_user.api_user.api_quota <= 0
-        puts "okay"
         return render_unauthorized("API quota exceeded")
       end
 
