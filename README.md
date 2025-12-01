@@ -81,7 +81,7 @@ rails server
 ```
 Rails application URL: http://localhost:3000 (Use the credentials in the db/seeds.rb file to log in).
 
-### Start background job
+#### Start background job
 Start Redis - open another terminal tab and run:
 ```bash
 redis-server
